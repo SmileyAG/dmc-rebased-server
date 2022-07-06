@@ -9,7 +9,7 @@ DLLNAME=agdmc
 ARCH=i386
 
 #make sure this is the correct compiler for your system
-CC=gcc
+CC=gcc-4.8
 
 DLL_SRCDIR=.
 ENGINE_SRCDIR=../../engine
