@@ -74,8 +74,8 @@ static inline void destroy(float**, float**) {}
 static inline void destroy(double**, double**) {}
 
 #ifdef __GNUG__
-static inline void *operator new(size_t, void *place) { return place; }
-static inline void *operator new[](size_t, void *place) { return place; }
+inline void *operator new(size_t, void *place) { return place; }
+inline void *operator new[](size_t, void *place) { return place; }
 #else
 #include <new.h>
 #endif

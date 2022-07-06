@@ -1,4 +1,4 @@
-LIBRARY dmc
+LIBRARY agdmc
 EXPORTS
 	GiveFnptrsToDll			@1
 SECTIONS

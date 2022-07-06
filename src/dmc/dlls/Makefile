@@ -4,7 +4,7 @@
 # October 2002 by Leon Hartwig (hartwig@valvesoftware.com)
 #
 
-DLLNAME=dmc
+DLLNAME=agdmc
 
 ARCH=i386
 
@@ -16,28 +16,28 @@ ENGINE_SRCDIR=../../engine
 COMMON_SRCDIR=../../common
 PM_SHARED_SRCDIR=../pm_shared
 GAME_SHARED_SRCDIR=../../game_shared
+MINISTL_SRCDIR=../
 
 DLL_OBJDIR=$(DLL_SRCDIR)/obj
 PM_SHARED_OBJDIR=$(DLL_OBJDIR)/pm_shared
 GAME_SHARED_OBJDIR=$(DLL_OBJDIR)/game_shared
 
-BASE_CFLAGS=	-Dstricmp=strcasecmp -D_strnicmp=strncasecmp -Dstrnicmp=strncasecmp -D_vsnprintf=vsnprintf\
-				-DCLIENT_WEAPONS
+BASE_CFLAGS=	-Dstricmp=strcasecmp -D_strnicmp=strncasecmp -Dstrnicmp=strncasecmp
 
 #safe optimization
-CFLAGS=$(BASE_CFLAGS) -w -m486 -O1
+CFLAGS=$(BASE_CFLAGS) -w -m32 -O1 -fpermissive
 
 #full optimization
 #CFLAGS=$(BASE_CFLAGS) -w -O1 -m486 -ffast-math -funroll-loops \
 	-fomit-frame-pointer -fexpensive-optimizations \
 	-malign-loops=2 -malign-jumps=2 -malign-functions=2
 
-#use these when debugging 
+#use these when debugging
 #CFLAGS=$(BASE_CFLAGS) -g
 
-INCLUDEDIRS=-I. -I$(ENGINE_SRCDIR) -I$(COMMON_SRCDIR) -I$(PM_SHARED_SRCDIR) -I$(GAME_SHARED_SRCDIR)
+INCLUDEDIRS=-I. -I$(ENGINE_SRCDIR) -I$(COMMON_SRCDIR) -I$(PM_SHARED_SRCDIR) -I$(GAME_SHARED_SRCDIR) -I$(MINISTL_SRCDIR)
 
-LDFLAGS=
+LDFLAGS=-lm
 
 SHLIBEXT=so
 SHLIBCFLAGS=-fPIC
@@ -104,6 +104,10 @@ OBJ = \
 	$(DLL_OBJDIR)/util.o \
 	$(DLL_OBJDIR)/weapons.o \
 	$(DLL_OBJDIR)/world.o \
+	$(DLL_OBJDIR)/agarena.o \
+	$(DLL_OBJDIR)/agglobal.o \
+	$(DLL_OBJDIR)/aglms.o \
+	$(DLL_OBJDIR)/agspectator.o \
 	$(PM_SHARED_OBJDIR)/pm_shared.o \
 	$(PM_SHARED_OBJDIR)/pm_math.o \
 	$(PM_SHARED_OBJDIR)/pm_debug.o \
