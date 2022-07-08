@@ -403,7 +403,7 @@ void CMultiManager :: ManagerThink ( void )
 
 	if ( m_index >= m_cTargets )// have we fired all targets?
 	{
-		SetThink( NULL );
+		ResetThink();
 		if ( IsClone() )
 		{
 			UTIL_Remove( this );
@@ -448,7 +448,7 @@ void CMultiManager :: ManagerUse ( CBaseEntity *pActivator, CBaseEntity *pCaller
 	m_index = 0;
 	m_startTime = gpGlobals->time;
 
-	SetUse( NULL );// disable use until all targets have fired
+	ResetUse();// disable use until all targets have fired
 
 	SetThink ( ManagerThink );
 	pev->nextthink = gpGlobals->time;
@@ -643,7 +643,7 @@ void CTriggerMonsterJump :: Think( void )
 {
 	pev->solid = SOLID_NOT;// kill the trigger for now !!!UNDONE
 	UTIL_SetOrigin( pev, pev->origin ); // Unlink from trigger list
-	SetThink( NULL );
+	ResetThink();
 }
 
 void CTriggerMonsterJump :: Touch( CBaseEntity *pOther )
@@ -745,7 +745,7 @@ void CTriggerCDAudio :: PlayTrack( void )
 {
 	//PlayCDTrack( (int)pev->health );
 	
-	SetTouch( NULL );
+	ResetTouch();
 	UTIL_Remove( this );
 }
 
@@ -967,7 +967,7 @@ void CTriggerHurt :: Spawn( void )
 	}
 	else
 	{
-		SetUse ( NULL );
+		ResetUse();
 	}
 
 	if (m_bitsDamageInflict & DMG_RADIATION)
@@ -1335,7 +1335,7 @@ void CBaseTrigger :: ActivateMultiTrigger( CBaseEntity *pActivator )
 	{
 		// we can't just remove (self) here, because this is a touch function
 		// called while C code is looping through area links...
-		SetTouch( NULL );
+		ResetTouch();
 		pev->nextthink = gpGlobals->time + 0.1;
 		SetThink(  SUB_Remove );
 	}
@@ -1351,7 +1351,7 @@ void CBaseTrigger :: MultiWaitOver( void )
 //		pev->takedamage	= DAMAGE_YES;
 //		pev->solid		= SOLID_BBOX;
 //		}
-	SetThink( NULL );
+	ResetThink();
 }
 
 
@@ -2231,7 +2231,7 @@ void CTriggerSave::SaveTouch( CBaseEntity *pOther )
 	if ( !pOther->IsPlayer() )
 		return;
     
-	SetTouch( NULL );
+	ResetTouch();
 	UTIL_Remove( this );
 	SERVER_COMMAND( "autosave\n" );
 }
@@ -2255,7 +2255,7 @@ void CTriggerEndSection::EndSectionUse( CBaseEntity *pActivator, CBaseEntity *pC
 	if ( !pActivator->IsNetClient() )
 		return;
     
-	SetUse( NULL );
+	ResetUse();
 
 	if ( pev->message )
 	{
@@ -2286,7 +2286,7 @@ void CTriggerEndSection::EndSectionTouch( CBaseEntity *pOther )
 	if ( !pOther->IsNetClient() )
 		return;
     
-	SetTouch( NULL );
+	ResetTouch();
 
 	if (pev->message)
 	{

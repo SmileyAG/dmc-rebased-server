@@ -452,7 +452,7 @@ void CBasePlayerItem::Materialize( void )
 
 	UTIL_SetOrigin( pev, pev->origin );// link into world.
 	SetTouch (DefaultTouch);
-	SetThink (NULL);
+	ResetThink();
 
 }
 
@@ -503,7 +503,7 @@ CBaseEntity* CBasePlayerItem::Respawn( void )
 	if ( pNewWeapon )
 	{
 		pNewWeapon->pev->effects |= EF_NODRAW;// invisible for now
-		pNewWeapon->SetTouch( NULL );// no touch
+		pNewWeapon->ResetTouch();// no touch
 		pNewWeapon->SetThink( AttemptToMaterialize );
 
 		DROP_TO_FLOOR ( ENT(pev) );
@@ -646,14 +646,14 @@ int CBasePlayerItem::AddToPlayer( CBasePlayer *pPlayer )
 
 void CBasePlayerItem::Drop( void )
 {
-	SetTouch( NULL );
+	ResetTouch();
 	SetThink(SUB_Remove);
 	pev->nextthink = gpGlobals->time + .1;
 }
 
 void CBasePlayerItem::Kill( void )
 {
-	SetTouch( NULL );
+	ResetTouch();
 	SetThink(SUB_Remove);
 	pev->nextthink = gpGlobals->time + .1;
 }
@@ -674,7 +674,7 @@ void CBasePlayerItem::AttachToPlayer ( CBasePlayer *pPlayer )
 	pev->model = iStringNull;
 	pev->owner = pPlayer->edict();
 	pev->nextthink = gpGlobals->time + .1;
-	SetTouch( NULL );
+	ResetTouch();
 }
 
 // CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is pOriginal
@@ -974,7 +974,7 @@ void CBasePlayerAmmo::Spawn( void )
 CBaseEntity* CBasePlayerAmmo::Respawn( void )
 {
 	pev->effects |= EF_NODRAW;
-	SetTouch( NULL );
+	ResetTouch();
 
 	UTIL_SetOrigin( pev, g_pGameRules->VecAmmoRespawnSpot( this ) );// move to wherever I'm supposed to repawn.
 
@@ -1012,7 +1012,7 @@ void CBasePlayerAmmo :: DefaultTouch( CBaseEntity *pOther )
 		}
 		else
 		{
-			SetTouch( NULL );
+			ResetTouch();
 			SetThink(SUB_Remove);
 			pev->nextthink = gpGlobals->time + .1;
 		}
@@ -1020,7 +1020,7 @@ void CBasePlayerAmmo :: DefaultTouch( CBaseEntity *pOther )
 	else if (gEvilImpulse101)
 	{
 		// evil impulse 101 hack, kill always
-		SetTouch( NULL );
+		ResetTouch();
 		SetThink(SUB_Remove);
 		pev->nextthink = gpGlobals->time + .1;
 	}
@@ -1236,7 +1236,7 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 	}
 
 	EMIT_SOUND( pOther->edict(), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM );
-	SetTouch(NULL);
+	ResetTouch();
 	UTIL_Remove(this);
 }
 
@@ -1282,8 +1282,8 @@ BOOL CWeaponBox::PackWeapon( CBasePlayerItem *pWeapon )
 	pWeapon->pev->modelindex = 0;
 	pWeapon->pev->model = iStringNull;
 	pWeapon->pev->owner = edict();
-	pWeapon->SetThink( NULL );// crowbar may be trying to swing again, etc.
-	pWeapon->SetTouch( NULL );
+	pWeapon->ResetThink();// crowbar may be trying to swing again, etc.
+	pWeapon->ResetTouch();
 	pWeapon->m_pPlayer = NULL;
 
 	//ALERT ( at_console, "packed %s\n", STRING(pWeapon->pev->classname) );

@@ -330,7 +330,7 @@ void CBaseDoor::Spawn( )
 	// if the door is flagged for USE button activation only, use NULL touch function
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{
-		SetTouch ( NULL );
+		ResetTouch();
 	}
 	else // touchable button
 		SetTouch( DoorTouch );
@@ -526,7 +526,7 @@ void CBaseDoor::DoorTouch( CBaseEntity *pOther )
 	m_hActivator = pOther;// remember who activated the door
 
 	if (DoorActivate( ))
-		SetTouch( NULL ); // Temporarily disable the touch function, until movement is finished.
+		ResetTouch(); // Temporarily disable the touch function, until movement is finished.
 }
 
 
@@ -739,7 +739,7 @@ void CBaseDoor::DoorHitBottom( void )
 	// Re-instate touch method, cycle is complete
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{// use only door
-		SetTouch ( NULL );
+		ResetTouch();
 	}
 	else // touchable door
 		SetTouch( DoorTouch );
@@ -920,7 +920,7 @@ void CRotDoor::Spawn( void )
 
 	if ( FBitSet ( pev->spawnflags, SF_DOOR_USE_ONLY ) )
 	{
-		SetTouch ( NULL );
+		ResetTouch();
 	}
 	else // touchable button
 		SetTouch( DoorTouch );
@@ -990,7 +990,7 @@ void CMomentaryDoor::Spawn( void )
 		m_vecPosition2 = m_vecPosition1;
 		m_vecPosition1 = pev->origin;
 	}
-	SetTouch( NULL );
+	ResetTouch();
 	
 	Precache();
 }

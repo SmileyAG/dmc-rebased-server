@@ -26,7 +26,8 @@
 
 #ifndef _WIN32
 #include <unistd.h>
-#define CreateDirectory(p, n) mkdir(p, 0777)
+#include <sys/stat.h>
+#define CreateDirectoryA(p, n) mkdir(p, 0777)
 #endif // _WIN32
 
 #define	HULL_STEP_SIZE 16// how far the test hull moves on each step
@@ -1648,9 +1649,9 @@ void CTestHull :: BuildNodeGraph( void )
 	// make sure directories have been made
 	GET_GAME_DIR( szNrpFilename );
 	strcat( szNrpFilename, "/maps" );
-	CreateDirectory( szNrpFilename, NULL );
+	CreateDirectoryA( szNrpFilename, NULL );
 	strcat( szNrpFilename, "/graphs" );
-	CreateDirectory( szNrpFilename, NULL );
+	CreateDirectoryA( szNrpFilename, NULL );
 
 	strcat( szNrpFilename, "/" );
 	strcat( szNrpFilename, STRING( gpGlobals->mapname ) );
@@ -2320,9 +2321,9 @@ int CGraph :: FLoadGraph ( char *szMapName )
 	char	szDirName[MAX_PATH];
 	GET_GAME_DIR( szDirName );
 	strcat( szDirName, "/maps" );
-	CreateDirectory( szDirName, NULL );
+	CreateDirectoryA( szDirName, NULL );
 	strcat( szDirName, "/graphs" );
-	CreateDirectory( szDirName, NULL );
+	CreateDirectoryA( szDirName, NULL );
 
 	strcpy ( szFilename, "maps/graphs/" );
 	strcat ( szFilename, szMapName );
@@ -2498,9 +2499,9 @@ int CGraph :: FSaveGraph ( char *szMapName )
 	// make sure directories have been made
 	GET_GAME_DIR( szFilename );
 	strcat( szFilename, "/maps" );
-	CreateDirectory( szFilename, NULL );
+	CreateDirectoryA( szFilename, NULL );
 	strcat( szFilename, "/graphs" );
-	CreateDirectory( szFilename, NULL );
+	CreateDirectoryA( szFilename, NULL );
 
 	strcat( szFilename, "/" );
 	strcat( szFilename, szMapName );

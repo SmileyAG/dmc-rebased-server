@@ -398,7 +398,7 @@ int CBaseButton::TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 	if ( code == BUTTON_NOTHING )
 		return 0;
 	// Temporarily disable the touch function, until movement is finished.
-	SetTouch( NULL );
+	ResetTouch();
 
 	m_hActivator = CBaseEntity::Instance( pevAttacker );
 	if ( m_hActivator == NULL )
@@ -499,7 +499,7 @@ void CBaseButton::Spawn( )
 	}
 	else 
 	{
-		SetTouch ( NULL );
+		ResetTouch();
 		SetUse	 ( ButtonUse );
 	}
 }
@@ -646,7 +646,7 @@ void CBaseButton:: ButtonTouch( CBaseEntity *pOther )
 	}
 
 	// Temporarily disable the touch function, until movement is finished.
-	SetTouch( NULL );
+	ResetTouch();
 
 	if ( code == BUTTON_RETURN )
 	{
@@ -706,7 +706,7 @@ void CBaseButton::TriggerAndWait( void )
 		if ( !FBitSet ( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) ) // this button only works if USED, not touched!
 		{
 		// ALL buttons are now use only
-		SetTouch ( NULL );
+		ResetTouch();
 		}
 		else
 			SetTouch( ButtonTouch );
@@ -781,7 +781,7 @@ void CBaseButton::ButtonBackHome( void )
 	if ( !FBitSet ( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) ) // this button only works if USED, not touched!
 	{
 	// All buttons are now use only	
-		SetTouch ( NULL );
+		ResetTouch();
 	}
 	else
 		SetTouch( ButtonTouch );
@@ -856,7 +856,7 @@ void CRotButton::Spawn( void )
 	// if the button is flagged for USE button activation only, take away it's touch function and add a use function
 	if ( !FBitSet ( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) )
 	{
-		SetTouch ( NULL );
+		ResetTouch();
 		SetUse	 ( ButtonUse );
 	}
 	else // touchable button
@@ -1082,7 +1082,7 @@ void CMomentaryRotButton::Off( void )
 		m_direction = -1;
 	}
 	else
-		SetThink( NULL );
+		ResetThink();
 }
 
 void CMomentaryRotButton::Return( void )
@@ -1102,7 +1102,7 @@ void CMomentaryRotButton::UpdateSelfReturn( float value )
 		pev->avelocity = g_vecZero;
 		pev->angles = m_start;
 		pev->nextthink = -1;
-		SetThink( NULL );
+		ResetThink();
 	}
 	else
 	{
@@ -1147,8 +1147,8 @@ LINK_ENTITY_TO_CLASS(env_debris, CEnvSpark);
 
 void CEnvSpark::Spawn(void)
 {
-	SetThink( NULL );
-	SetUse( NULL );
+	ResetThink();
+	ResetUse();
 
 	if (FBitSet(pev->spawnflags, 32)) // Use for on/off
 	{
@@ -1216,7 +1216,7 @@ void EXPORT CEnvSpark::SparkStart(CBaseEntity *pActivator, CBaseEntity *pCaller,
 void EXPORT CEnvSpark::SparkStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	SetUse(SparkStart);
-	SetThink(NULL);
+	ResetThink();
 }
 
 #define SF_BTARGET_USE		0x0001

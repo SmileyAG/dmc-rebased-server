@@ -358,12 +358,12 @@ public:
 // Normally it's illegal to cast a pointer to a member function of a derived class to a pointer to a 
 // member function of a base class.  static_cast is a sleezy way around that problem.
 
-#ifdef _DEBUG
+#ifdef _WIN32
 
-#define SetThink( a ) ThinkSet( static_cast <void (CBaseEntity::*)(void)> (a), #a )
-#define SetTouch( a ) TouchSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
-#define SetUse( a ) UseSet( static_cast <void (CBaseEntity::*)(	CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a), #a )
-#define SetBlocked( a ) BlockedSet( static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a), #a )
+#define SetThink( a ) m_pfnThink = static_cast <void (CBaseEntity::*)(void)> (a)
+#define SetTouch( a ) m_pfnTouch = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)
+#define SetUse( a ) m_pfnUse = static_cast <void (CBaseEntity::*)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (a)
+#define SetBlocked( a ) m_pfnBlocked = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (a)
 
 #else
 
@@ -371,12 +371,13 @@ public:
 #define SetTouch( a ) m_pfnTouch = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (&a)
 #define SetUse( a ) m_pfnUse = static_cast <void (CBaseEntity::*)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (&a)
 #define SetBlocked( a ) m_pfnBlocked = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (&a)
+
+#endif
+
 #define ResetThink( ) m_pfnThink = static_cast <void (CBaseEntity::*)(void)> (NULL)
 #define ResetTouch( ) m_pfnTouch = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (NULL)
 #define ResetUse( ) m_pfnUse = static_cast <void (CBaseEntity::*)( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )> (NULL)
 #define ResetBlocked( ) m_pfnBlocked = static_cast <void (CBaseEntity::*)(CBaseEntity *)> (NULL)
-
-#endif
 
 
 class CPointEntity : public CBaseEntity
@@ -550,7 +551,16 @@ public:
 							// the button will be allowed to operate. Otherwise, it will be
 							// deactivated.
 };
+
+#ifdef _WIN32
+
 #define SetMoveDone( a ) m_pfnCallWhenMoveDone = static_cast <void (CBaseToggle::*)(void)> (a)
+
+#else
+
+#define SetMoveDone( a ) m_pfnCallWhenMoveDone = static_cast <void (CBaseToggle::*)(void)> (&a)
+
+#endif
 
 
 // people gib if their health is <= this at the time of death

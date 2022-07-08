@@ -95,7 +95,7 @@ void CQuakeItem::Materialize()
 void CQuakeItem::Respawn( float flTime )
 {
 	pev->effects |= EF_NODRAW;
-	SetTouch( NULL );
+	ResetTouch();
 
 	// Come back in time
 	SetThink ( Materialize );
@@ -232,7 +232,7 @@ BOOL CItemHealth::MyTouch( CBasePlayer *pPlayer )
 	{
 		// Go invisible and fire targets
 		pev->effects |= EF_NODRAW;
-		SetTouch( NULL );
+		ResetTouch();
 		SUB_UseTargets( pPlayer, USE_TOGGLE, 0 );
 
 		pPlayer->m_iQuakeItems |= IT_SUPERHEALTH;

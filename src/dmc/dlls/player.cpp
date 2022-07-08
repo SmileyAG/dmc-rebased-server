@@ -3727,7 +3727,7 @@ int CBasePlayer::RemovePlayerItem( CBasePlayerItem *pItem )
 		ResetAutoaim( );
 		pItem->Holster( );
 		pItem->pev->nextthink = 0;// crowbar may be trying to swing again, etc.
-		pItem->SetThink( NULL );
+		pItem->ResetThink();
 		m_pActiveItem = NULL;
 		pev->viewmodel = 0;
 		pev->weaponmodel = 0;

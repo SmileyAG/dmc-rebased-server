@@ -113,7 +113,7 @@ void CBubbling::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 	}
 	else
 	{
-		SetThink( NULL );
+		ResetThink();
 		pev->nextthink = 0;
 	}
 }
@@ -469,7 +469,7 @@ void CLightning::Spawn( void )
 
 	if ( ServerSide() )
 	{
-		SetThink( NULL );
+		ResetThink();
 		if ( pev->dmg > 0 )
 		{
 			SetThink( DamageThink );
@@ -612,7 +612,7 @@ void CLightning::StrikeUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 	if ( m_active )
 	{
 		m_active = 0;
-		SetThink( NULL );
+		ResetThink();
 	}
 	else
 	{
@@ -621,7 +621,7 @@ void CLightning::StrikeUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 	}
 
 	if ( !FBitSet( pev->spawnflags, SF_BEAM_TOGGLE ) )
-		SetUse( NULL );
+		ResetUse();
 }
 
 
@@ -1511,7 +1511,7 @@ void CGibShooter :: ShootThink ( void )
 		if ( pev->spawnflags & SF_GIBSHOOTER_REPEATABLE )
 		{
 			m_iGibs = m_iGibCapacity;
-			SetThink ( NULL );
+			ResetThink();
 			pev->nextthink = gpGlobals->time;
 		}
 		else
@@ -1701,7 +1701,7 @@ void CTestEffect::TestThink( void )
 		m_flStartTime = gpGlobals->time;
 		m_iBeam = 0;
 		// pev->nextthink = gpGlobals->time;
-		SetThink( NULL );
+		ResetThink();
 	}
 }
 
@@ -2238,7 +2238,7 @@ void CItemSoda::CanThink ( void )
 
 	pev->solid = SOLID_TRIGGER;
 	UTIL_SetSize ( pev, Vector ( -8, -8, 0 ), Vector ( 8, 8, 8 ) );
-	SetThink ( NULL );
+	ResetThink();
 	SetTouch ( CanTouch );
 }
 
@@ -2262,7 +2262,7 @@ void CItemSoda::CanTouch ( CBaseEntity *pOther )
 	pev->solid = SOLID_NOT;
 	pev->movetype = MOVETYPE_NONE;
 	pev->effects = EF_NODRAW;
-	SetTouch ( NULL );
+	ResetTouch();
 	SetThink ( SUB_Remove );
 	pev->nextthink = gpGlobals->time;
 }

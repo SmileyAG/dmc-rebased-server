@@ -827,9 +827,9 @@ BOOL CBaseMonster :: CineCleanup( )
 
 		if ( pOldCine && FBitSet( pOldCine->pev->spawnflags, SF_SCRIPT_LEAVECORPSE ) )
 		{
-			SetUse( NULL );		// BUGBUG -- This doesn't call Killed()
-			SetThink( NULL );	// This will probably break some stuff
-			SetTouch( NULL );
+			ResetUse();		// BUGBUG -- This doesn't call Killed()
+			ResetThink();	// This will probably break some stuff
+			ResetTouch();
 		}
 		else
 			SUB_StartFadeOut(); // SetThink( SUB_DoNothing );

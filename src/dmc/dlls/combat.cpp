@@ -123,7 +123,7 @@ void CGib :: SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs 
 			pGib->pev->solid = SOLID_BBOX;
 			UTIL_SetSize ( pGib->pev, Vector ( 0, 0 ,0 ), Vector ( 0, 0, 0 ) );
 			pGib->SetTouch ( StickyGibTouch );
-			pGib->SetThink (NULL);
+			pGib->ResetThink();
 		}
 		pGib->LimitVelocity();
 	}
